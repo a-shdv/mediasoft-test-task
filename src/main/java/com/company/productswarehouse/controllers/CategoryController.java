@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
@@ -24,8 +24,6 @@ public class CategoryController {
             return ResponseEntity.ok(categoryService.findAll());
         } catch (CategoryListIsEmptyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -34,8 +32,6 @@ public class CategoryController {
         try {
             return ResponseEntity.ok(categoryService.findById(id));
         } catch (CategoryNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -46,19 +42,15 @@ public class CategoryController {
             return ResponseEntity.ok(categoryService.save(categoryDto));
         } catch (CategoryAlreadyExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> editById(@PathVariable UUID id, @RequestBody Category category) {
+    public ResponseEntity<?> editById(@PathVariable UUID id, @RequestBody CategoryDto categoryDto) {
         try {
-            return ResponseEntity.ok(categoryService.editById(id, category));
+            return ResponseEntity.ok(categoryService.editById(id, categoryDto));
         } catch (CategoryNotFoundException houseNotFoundException) {
             return ResponseEntity.badRequest().body(houseNotFoundException.toString());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -67,8 +59,6 @@ public class CategoryController {
         try {
             return ResponseEntity.ok(categoryService.deleteById(id));
         } catch (CategoryNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

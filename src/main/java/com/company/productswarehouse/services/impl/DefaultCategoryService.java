@@ -7,6 +7,7 @@ import com.company.productswarehouse.exceptions.CategoryListIsEmptyException;
 import com.company.productswarehouse.exceptions.CategoryNotFoundException;
 import com.company.productswarehouse.repos.CategoryRepo;
 import com.company.productswarehouse.services.CategoryService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class DefaultCategoryService implements CategoryService {
 
 
     @Override
+    @Transactional
     public List<Category> findAll() throws CategoryListIsEmptyException {
         List<Category> categories = categoryRepo.findAll();
         if (categories.isEmpty()) {
@@ -30,6 +32,7 @@ public class DefaultCategoryService implements CategoryService {
     }
 
     @Override
+    @Transactional
     public Category findById(UUID uuid) throws CategoryNotFoundException {
         Optional<Category> category = categoryRepo.findById(uuid);
         if (!category.isPresent()) {
@@ -39,6 +42,7 @@ public class DefaultCategoryService implements CategoryService {
     }
 
     @Override
+    @Transactional
     public Category save(CategoryDto categoryDto) throws CategoryAlreadyExistsException {
         Category category = CategoryDto.toCategory(categoryDto);
         if (categoryRepo.findByTitle(category.getTitle()).isPresent()) {
@@ -48,8 +52,10 @@ public class DefaultCategoryService implements CategoryService {
     }
 
     @Override
-    public UUID editById(UUID id, Category category) throws CategoryNotFoundException {
+    @Transactional
+    public UUID editById(UUID id, CategoryDto categoryDto) throws CategoryNotFoundException {
         Optional<Category> dbCategory = categoryRepo.findById(id);
+        Category category = CategoryDto.toCategory(categoryDto);
         if (!dbCategory.isPresent()) {
             throw new CategoryNotFoundException("Категория не найдена!");
         }
@@ -58,8 +64,8 @@ public class DefaultCategoryService implements CategoryService {
         return dbCategory.get().getId();
     }
 
-    // TODO
     @Override
+    @Transactional
     public UUID deleteById(UUID id) throws CategoryNotFoundException {
         if (!categoryRepo.findById(id).isPresent()) {
             throw new CategoryNotFoundException("Категория не найдена!");

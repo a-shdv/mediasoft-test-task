@@ -16,7 +16,7 @@ public interface ProductService {
 
     Product save(ProductDto productDto) throws ProductAlreadyExistsException;
 
-    Product edit(Product product) throws ProductNotFoundException;
+    UUID editById(UUID id, ProductDto productDto) throws ProductNotFoundException;
 
-    UUID delete(Product product) throws ProductNotFoundException;
+    UUID deleteById(UUID id) throws ProductNotFoundException;
 }

@@ -16,7 +16,7 @@ public interface CategoryService {
 
     Category save(CategoryDto categoryDto) throws CategoryAlreadyExistsException;
 
-    UUID editById(UUID id, Category category) throws CategoryNotFoundException;
+    UUID editById(UUID id, CategoryDto categoryDto) throws CategoryNotFoundException;
 
     UUID deleteById(UUID id) throws CategoryNotFoundException;
 }

@@ -10,7 +10,7 @@ public record CategoryDto(@Getter String title) {
 
     public static Category toCategory(CategoryDto categoryDto) {
         return Category.builder()
-                .title(categoryDto.title())
+                .title(categoryDto.title)
                 .build();
     }
 }

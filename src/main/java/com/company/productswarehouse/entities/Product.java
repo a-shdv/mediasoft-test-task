@@ -1,7 +1,9 @@
 package com.company.productswarehouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,12 +28,12 @@ public class Product {
     private UUID id;
 
     @NotEmpty(message = "Артикул не должен быть пустым!")
-    @Size(min = 5, max= 255)
+    @Size(min = 5, max = 255)
     private String article;
 
     @Column(unique = true)
     @NotEmpty(message = "Название не должно быть пустым!")
-    @Size(min = 5, max= 50)
+    @Size(min = 5, max = 50)
     private String title;
 
     @Column(columnDefinition = "text")
@@ -39,15 +41,15 @@ public class Product {
     @Size(min = 5)
     private String description;
 
-    @NotEmpty(message = "Цена не должна быть пустой")
+    @NotNull
     private BigDecimal price;
 
-    @NotEmpty(message = "Количество не должно быть пустым")
-    @Size(min = 1)
+    @NotNull
     private Integer amount;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
 
     private LocalDateTime createdAt;
