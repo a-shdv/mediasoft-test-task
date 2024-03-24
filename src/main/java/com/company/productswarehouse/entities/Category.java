@@ -1,8 +1,6 @@
 package com.company.productswarehouse.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -23,8 +21,6 @@ public class Category {
     private UUID id;
 
     @Column(unique = true)
-    @NotEmpty(message = "Название не должно быть пустым!")
-    @Size(min = 5, max = 50)
     private String title;
 
     @OneToMany(mappedBy = "category",

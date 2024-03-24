@@ -1,10 +1,8 @@
 package com.company.productswarehouse.exceptions.products;
 
-public class ProductNotFoundException extends Exception {
-    public ProductNotFoundException() {
-    }
-
+public class ProductNotFoundException extends ProductException {
     public ProductNotFoundException(String message) {
         super(message);
     }
 }
+
