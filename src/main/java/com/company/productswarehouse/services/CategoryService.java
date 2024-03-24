@@ -2,9 +2,9 @@ package com.company.productswarehouse.services;
 
 import com.company.productswarehouse.dtos.CategoryDto;
 import com.company.productswarehouse.entities.Category;
-import com.company.productswarehouse.exceptions.CategoryAlreadyExistsException;
-import com.company.productswarehouse.exceptions.CategoryListIsEmptyException;
-import com.company.productswarehouse.exceptions.CategoryNotFoundException;
+import com.company.productswarehouse.exceptions.categories.CategoryAlreadyExistsException;
+import com.company.productswarehouse.exceptions.categories.CategoryListIsEmptyException;
+import com.company.productswarehouse.exceptions.categories.CategoryNotFoundException;
 
 import java.util.List;
 import java.util.UUID;

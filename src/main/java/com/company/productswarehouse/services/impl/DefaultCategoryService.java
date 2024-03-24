@@ -2,9 +2,9 @@ package com.company.productswarehouse.services.impl;
 
 import com.company.productswarehouse.dtos.CategoryDto;
 import com.company.productswarehouse.entities.Category;
-import com.company.productswarehouse.exceptions.CategoryAlreadyExistsException;
-import com.company.productswarehouse.exceptions.CategoryListIsEmptyException;
-import com.company.productswarehouse.exceptions.CategoryNotFoundException;
+import com.company.productswarehouse.exceptions.categories.CategoryAlreadyExistsException;
+import com.company.productswarehouse.exceptions.categories.CategoryListIsEmptyException;
+import com.company.productswarehouse.exceptions.categories.CategoryNotFoundException;
 import com.company.productswarehouse.repos.CategoryRepo;
 import com.company.productswarehouse.services.CategoryService;
 import jakarta.transaction.Transactional;

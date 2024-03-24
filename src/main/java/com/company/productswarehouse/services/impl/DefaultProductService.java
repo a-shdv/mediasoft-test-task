@@ -3,9 +3,9 @@ package com.company.productswarehouse.services.impl;
 import com.company.productswarehouse.dtos.ProductDto;
 import com.company.productswarehouse.entities.Category;
 import com.company.productswarehouse.entities.Product;
-import com.company.productswarehouse.exceptions.ProductAlreadyExistsException;
-import com.company.productswarehouse.exceptions.ProductListIsEmptyException;
-import com.company.productswarehouse.exceptions.ProductNotFoundException;
+import com.company.productswarehouse.exceptions.products.ProductAlreadyExistsException;
+import com.company.productswarehouse.exceptions.products.ProductListIsEmptyException;
+import com.company.productswarehouse.exceptions.products.ProductNotFoundException;
 import com.company.productswarehouse.repos.CategoryRepo;
 import com.company.productswarehouse.repos.ProductRepo;
 import com.company.productswarehouse.services.ProductService;
@@ -83,8 +83,8 @@ public class DefaultProductService implements ProductService {
     /**
      * Редактирует товар по его идентификатору.
      *
-     * @param id          Идентификатор товара.
-     * @param productDto  DTO с обновлёнными данными товара.
+     * @param id         Идентификатор товара.
+     * @param productDto DTO с обновлёнными данными товара.
      * @return Идентификатор отредактированного товара.
      * @throws ProductNotFoundException Если товар не найден.
      */
