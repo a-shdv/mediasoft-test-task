@@ -15,12 +15,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Сервис для работы с категориями товаров.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultCategoryService implements CategoryService {
     private final CategoryRepo categoryRepo;
 
 
+    /**
+     * Получает список всех категорий товаров.
+     *
+     * @return Список категорий товаров.
+     * @throws CategoryListIsEmptyException Если список категорий пуст.
+     */
     @Override
     @Transactional
     public List<Category> findAll() throws CategoryListIsEmptyException {
@@ -31,6 +40,13 @@ public class DefaultCategoryService implements CategoryService {
         return categories;
     }
 
+    /**
+     * Находит категорию товара по её идентификатору.
+     *
+     * @param uuid Идентификатор категории.
+     * @return Найденная категория товара.
+     * @throws CategoryNotFoundException Если категория не найдена.
+     */
     @Override
     @Transactional
     public Category findById(UUID uuid) throws CategoryNotFoundException {
@@ -41,6 +57,13 @@ public class DefaultCategoryService implements CategoryService {
         return category.get();
     }
 
+    /**
+     * Сохраняет новую категорию товара.
+     *
+     * @param categoryDto DTO новой категории товара.
+     * @return Сохранённая категория товара.
+     * @throws CategoryAlreadyExistsException Если категория уже существует.
+     */
     @Override
     @Transactional
     public Category save(CategoryDto categoryDto) throws CategoryAlreadyExistsException {
@@ -51,6 +74,14 @@ public class DefaultCategoryService implements CategoryService {
         return categoryRepo.save(category);
     }
 
+    /**
+     * Редактирует категорию товара по её идентификатору.
+     *
+     * @param id          Идентификатор категории.
+     * @param categoryDto DTO с обновлёнными данными категории товара.
+     * @return Идентификатор отредактированной категории товара.
+     * @throws CategoryNotFoundException Если категория не найдена.
+     */
     @Override
     @Transactional
     public UUID editById(UUID id, CategoryDto categoryDto) throws CategoryNotFoundException {
@@ -64,6 +95,13 @@ public class DefaultCategoryService implements CategoryService {
         return dbCategory.get().getId();
     }
 
+    /**
+     * Удаляет категорию товара по её идентификатору.
+     *
+     * @param id Идентификатор категории.
+     * @return Идентификатор удалённой категории товара.
+     * @throws CategoryNotFoundException Если категория не найдена.
+     */
     @Override
     @Transactional
     public UUID deleteById(UUID id) throws CategoryNotFoundException {

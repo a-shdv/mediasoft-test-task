@@ -17,12 +17,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Реализация сервиса для работы с товарами.
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultProductService implements ProductService {
     private final ProductRepo productRepo;
     private final CategoryRepo categoryRepo;
 
+    /**
+     * Получает список всех товаров.
+     *
+     * @return Список всех товаров.
+     * @throws ProductListIsEmptyException Если список товаров пуст.
+     */
     @Override
     @Transactional
     public List<Product> findAll() throws ProductListIsEmptyException {
@@ -33,6 +42,13 @@ public class DefaultProductService implements ProductService {
         return products;
     }
 
+    /**
+     * Находит товар по его идентификатору.
+     *
+     * @param uuid Идентификатор товара.
+     * @return Найденный товар.
+     * @throws ProductNotFoundException Если товар не найден.
+     */
     @Override
     @Transactional
     public Product findById(UUID uuid) throws ProductNotFoundException {
@@ -43,6 +59,13 @@ public class DefaultProductService implements ProductService {
         return product.get();
     }
 
+    /**
+     * Сохраняет новый товар.
+     *
+     * @param productDto DTO нового товара.
+     * @return Сохранённый товар.
+     * @throws ProductAlreadyExistsException Если товар уже существует.
+     */
     @Override
     @Transactional
     public Product save(ProductDto productDto) throws ProductAlreadyExistsException {
@@ -57,7 +80,14 @@ public class DefaultProductService implements ProductService {
         return productRepo.save(product);
     }
 
-    // TODO
+    /**
+     * Редактирует товар по его идентификатору.
+     *
+     * @param id          Идентификатор товара.
+     * @param productDto  DTO с обновлёнными данными товара.
+     * @return Идентификатор отредактированного товара.
+     * @throws ProductNotFoundException Если товар не найден.
+     */
     @Override
     @Transactional
     public UUID editById(UUID id, ProductDto productDto) throws ProductNotFoundException {
@@ -73,6 +103,13 @@ public class DefaultProductService implements ProductService {
         return dbProduct.get().getId();
     }
 
+    /**
+     * Удаляет товар по его идентификатору.
+     *
+     * @param id Идентификатор товара.
+     * @return Идентификатор удалённого товара.
+     * @throws ProductNotFoundException Если товар не найден.
+     */
     @Override
     @Transactional
     public UUID deleteById(UUID id) throws ProductNotFoundException {
