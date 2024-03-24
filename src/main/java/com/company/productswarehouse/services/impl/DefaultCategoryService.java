@@ -1,7 +1,9 @@
 package com.company.productswarehouse.services.impl;
 
+import com.company.productswarehouse.dtos.CategoryDto;
 import com.company.productswarehouse.entities.Category;
 import com.company.productswarehouse.exceptions.CategoryAlreadyExistsException;
+import com.company.productswarehouse.exceptions.CategoryListIsEmptyException;
 import com.company.productswarehouse.exceptions.CategoryNotFoundException;
 import com.company.productswarehouse.repos.CategoryRepo;
 import com.company.productswarehouse.services.CategoryService;
@@ -19,8 +21,12 @@ public class DefaultCategoryService implements CategoryService {
 
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepo.findAll();
+    public List<Category> findAll() throws CategoryListIsEmptyException {
+        List<Category> categories = categoryRepo.findAll();
+        if (categories.isEmpty()) {
+            throw new CategoryListIsEmptyException("Список категорий пуст!");
+        }
+        return categories;
     }
 
     @Override
@@ -33,26 +39,32 @@ public class DefaultCategoryService implements CategoryService {
     }
 
     @Override
-    public Category save(Category category) throws CategoryAlreadyExistsException {
-        if (categoryRepo.findById(category.getId()).isPresent()) {
+    public Category save(CategoryDto categoryDto) throws CategoryAlreadyExistsException {
+        Category category = CategoryDto.toCategory(categoryDto);
+        if (categoryRepo.findByTitle(category.getTitle()).isPresent()) {
             throw new CategoryAlreadyExistsException("Категория уже существует!");
         }
         return categoryRepo.save(category);
     }
 
     @Override
-    public Category edit(Category category) throws CategoryNotFoundException {
-        return null;
+    public UUID editById(UUID id, Category category) throws CategoryNotFoundException {
+        Optional<Category> dbCategory = categoryRepo.findById(id);
+        if (!dbCategory.isPresent()) {
+            throw new CategoryNotFoundException("Категория не найдена!");
+        }
+        dbCategory.get().setTitle(category.getTitle());
+        categoryRepo.save(dbCategory.get());
+        return dbCategory.get().getId();
     }
 
     // TODO
     @Override
-    public Category delete(Category category) throws CategoryNotFoundException {
-        UUID categoryId = category.getId();
-        if (!categoryRepo.findById(categoryId).isPresent()) {
+    public UUID deleteById(UUID id) throws CategoryNotFoundException {
+        if (!categoryRepo.findById(id).isPresent()) {
             throw new CategoryNotFoundException("Категория не найдена!");
         }
-        categoryRepo.deleteById(categoryId);
-        return category;
+        categoryRepo.deleteById(id);
+        return id;
     }
 }

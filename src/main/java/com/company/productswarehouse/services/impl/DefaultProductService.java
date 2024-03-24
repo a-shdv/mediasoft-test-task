@@ -1,7 +1,9 @@
 package com.company.productswarehouse.services.impl;
 
+import com.company.productswarehouse.dtos.ProductDto;
 import com.company.productswarehouse.entities.Product;
 import com.company.productswarehouse.exceptions.ProductAlreadyExistsException;
+import com.company.productswarehouse.exceptions.ProductListIsEmptyException;
 import com.company.productswarehouse.exceptions.ProductNotFoundException;
 import com.company.productswarehouse.repos.ProductRepo;
 import com.company.productswarehouse.services.ProductService;
@@ -18,8 +20,12 @@ public class DefaultProductService implements ProductService {
     private final ProductRepo productRepo;
 
     @Override
-    public List<Product> findAll() {
-        return productRepo.findAll();
+    public List<Product> findAll() throws ProductListIsEmptyException {
+        List<Product> products = productRepo.findAll();
+        if (products.isEmpty()) {
+            throw new ProductListIsEmptyException("Список товаров пуст!");
+        }
+        return products;
     }
 
     @Override
@@ -32,8 +38,9 @@ public class DefaultProductService implements ProductService {
     }
 
     @Override
-    public Product save(Product product) throws ProductAlreadyExistsException {
-        if (productRepo.findById(product.getId()).isPresent()) {
+    public Product save(ProductDto productDto) throws ProductAlreadyExistsException {
+        Product product = ProductDto.toProduct(productDto);
+        if (productRepo.findByTitle(product.getTitle()).isPresent()) {
             throw new ProductAlreadyExistsException("Товар уже существует!");
         }
         return productRepo.save(product);

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,8 +19,10 @@ import java.util.UUID;
 public class Category {
     @Id
     @GeneratedValue
+    @UuidGenerator
     private UUID id;
 
+    @Column(unique = true)
     @NotEmpty(message = "Название не должно быть пустым!")
     @Size(min = 5, max= 50)
     private String title;
