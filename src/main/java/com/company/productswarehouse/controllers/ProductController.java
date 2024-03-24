@@ -1,16 +1,11 @@
 package com.company.productswarehouse.controllers;
 
 import com.company.productswarehouse.dtos.ProductDto;
-import com.company.productswarehouse.entities.Product;
 import com.company.productswarehouse.exceptions.products.ProductAlreadyExistsException;
 import com.company.productswarehouse.exceptions.products.ProductListIsEmptyException;
 import com.company.productswarehouse.exceptions.products.ProductNotFoundException;
 import com.company.productswarehouse.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
