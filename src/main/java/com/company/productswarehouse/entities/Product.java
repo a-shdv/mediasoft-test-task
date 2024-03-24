@@ -24,9 +24,9 @@ public class Product {
     @UuidGenerator
     private UUID id;
 
-    private String article;
-
     @Column(unique = true)
+    private String article;
+    
     private String title;
 
     @Column(columnDefinition = "text")
