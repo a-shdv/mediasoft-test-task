@@ -1,10 +1,9 @@
 package com.company.productswarehouse.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,12 +20,15 @@ public class Category {
     @GeneratedValue
     private UUID id;
 
+    @NotEmpty(message = "Название не должно быть пустым!")
+    @Size(min = 5, max= 50)
     private String title;
 
     @OneToMany(mappedBy = "category",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             orphanRemoval = true)
+    @ToString.Exclude
     private List<Product> products;
 
     private LocalDateTime createdAt;
